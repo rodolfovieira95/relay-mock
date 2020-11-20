@@ -1,0 +1,11 @@
+{
+  "name": "relay-mock",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Rodolfo Vieira <rodolfo.vieira@captalys.com.br>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": {
+    "packages":["packages/*"]
+  }
+}
