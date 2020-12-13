@@ -1,13 +1,39 @@
 import React from "react";
-import { QueryRenderer } from "react-relay";
+import { QueryRenderer, graphql } from "react-relay";
+import { Flex, Typography } from "@captalys-platform/core";
 
 import environment from "./environment";
 
-const graphql = require("babel-plugin-relay/macro");
+type HelloProp = {
+  hello?: string;
+};
+
+const renderQuery = ({ error, props }: { error: Error; props: HelloProp }) => {
+  console.log("error: ", error);
+  if (error) {
+    return (
+      <Typography color="primary" variant="h1">
+        Error!
+      </Typography>
+    );
+  }
+  if (!props) {
+    return (
+      <Typography color="primary" variant="h1">
+        Loading...
+      </Typography>
+    );
+  }
+  return (
+    <Typography color="primary" variant="h2">
+      {props.hello}
+    </Typography>
+  );
+};
 
 const App = () => {
   return (
-    <div>
+    <Flex alignItems="center">
       <QueryRenderer
         environment={environment}
         query={graphql`
@@ -16,19 +42,10 @@ const App = () => {
           }
         `}
         variables={{}}
-        render={({ error, props }) => {
-          console.log("error: ", error);
-          if (error) {
-            return <div>Error!</div>;
-          }
-          if (!props) {
-            return <div>Loading...</div>;
-          }
-          // @ts-ignore
-          return <div>Teste: {props.hello}</div>;
-        }}
+        // @ts-ignore
+        render={renderQuery}
       />
-    </div>
+    </Flex>
   );
 };
 
